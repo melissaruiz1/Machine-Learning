@@ -14,7 +14,6 @@ import csv
 
 wrong_pred = 0.0
 total_pred = 0.0
-class_num = 2
 db = []
 
 #reading the data in a csv file
@@ -43,9 +42,9 @@ for i, instance in enumerate(db):
     Y = []
     for data, instance in enumerate(db):
         if i != data:
-            if instance[class_num] == '+':
+            if instance[2] == '+':
                 Y.append(1)
-            elif instance[class_num] == '-':
+            elif instance[2] == '-':
                 Y.append(2)
 
     #store the test sample of this iteration in the vector testSample
@@ -65,10 +64,10 @@ for i, instance in enumerate(db):
     #--> add your Python code here
     for data, instance in enumerate(db):
             if i == data:
-                if instance[class_num] == '+':
+                if instance[2] == '+':
                     true_label = 1
                     total_pred += 1
-                elif instance[class_num] == '-':
+                elif instance[2] == '-':
                     true_label = 2
                     total_pred += 1
 

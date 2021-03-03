@@ -14,7 +14,6 @@ import csv
 
 # reading the training data
 # --> add your Python code here
-class_num = 5
 dbTraining = []
 with open('weather_training.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
@@ -25,42 +24,41 @@ with open('weather_training.csv', 'r') as csvfile:
 # transform the original training features to numbers and add to the 4D array X. For instance Sunny = 1, Overcast = 2, Rain = 3, so X = [[3, 1, 1, 2], [1, 3, 2, 2], ...]]
 # --> add your Python code here
 X = []
+outlook = {
+    "Sunny": 1,
+    "Overcast": 2,
+    "Rain": 3
+}
+
+temperature = {
+    "Cool": 1,
+    "Mild": 2,
+    "Hot": 3
+}
+
+humidity = {
+    "Normal": 1,
+    "High": 2
+}
+
+wind = {
+    "Weak": 1,
+    "Strong": 2
+}
+
 for data in dbTraining:
-    trainingFeats = []
-    if data[1] == 'Sunny':
-        trainingFeats.append(1)
-    elif data[1] == 'Overcast':
-        trainingFeats.append(2)
-    elif data[1] == 'Rain':
-        trainingFeats.append(3)
-
-    if data[2] == 'Cool':
-        trainingFeats.append(1)
-    elif data[2] == 'Mild':
-        trainingFeats.append(2)
-    elif data[2] == 'Hot':
-        trainingFeats.append(3)
-
-    if data[3] == 'Normal':
-        trainingFeats.append(1)
-    elif data[3] == 'High':
-        trainingFeats.append(2)
-
-    if data[4] == 'Weak':
-        trainingFeats.append(1)
-    elif data[4] == 'Strong':
-        trainingFeats.append(2)
-
-    X.append(trainingFeats)
+    X.append([outlook[data[1]], temperature[data[2]], humidity[data[3]], wind[data[4]]])
 
 # transform the original training classes to numbers and add to the vector Y. For instance Yes = 1, No = 2, so Y = [1, 1, 2, 2, ...]
 # --> add your Python code here
 Y = []
+playTennis = {
+        "Yes": 1,
+        "No": 2,
+    }
+
 for data in dbTraining:
-    if data[class_num] == 'Yes':
-        Y.append(1)
-    elif data[class_num] == 'No':
-        Y.append(2)
+    Y.append(playTennis[data[5]])
 
 # fitting the naive bayes to the data
 clf = GaussianNB()
@@ -82,33 +80,30 @@ print("Day".ljust(15) + "Outlook".ljust(15) + "Temperature".ljust(15) +
 # use your test samples to make probabilistic predictions.
 # --> add your Python code here
 # -->predicted = clf.predict_proba([[3, 1, 2, 1]])[0]
+outlook = {
+    "Sunny": 1,
+    "Overcast": 2,
+    "Rain": 3
+}
+temperature = {
+    "Cool": 1,
+    "Mild": 2,
+    "Hot": 3
+}
+humidity = {
+    "Normal": 1,
+    "High": 2
+}
+wind = {
+    "Weak": 1,
+    "Strong": 2
+}
+
 for data in dbTest:
     samples = []
-    if data[1] == 'Sunny':
-        samples.append(1)
-    elif data[1] == 'Overcast':
-        samples.append(2)
-    elif data[1] == 'Rain':
-        samples.append(3)
+    samples.append([outlook[data[1]], temperature[data[2]], humidity[data[3]], wind[data[4]]])
 
-    if data[2] == 'Cool':
-        samples.append(1)
-    elif data[2] == 'Mild':
-        samples.append(2)
-    elif data[2] == 'Hot':
-        samples.append(3)
-
-    if data[3] == 'Normal':
-        samples.append(1)
-    elif data[3] == 'High':
-        samples.append(2)
-
-    if data[4] == 'Weak':
-        samples.append(1)
-    elif data[4] == 'Strong':
-        samples.append(2)
-
-    predicted = clf.predict_proba([samples])[0]
+    predicted = clf.predict_proba(samples)[0]
 
     if (predicted[0] > predicted[1]) and (predicted[0] >= 0.75):
         print(data[0].ljust(15), data[1].ljust(15), data[2].ljust(15), data[3].ljust(15), data[4].ljust(15), 'Yes'.ljust(15), "{:.2f}".format(predicted[0]))
