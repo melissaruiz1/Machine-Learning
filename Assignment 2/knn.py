@@ -3,7 +3,7 @@
 # FILENAME: knn.py
 # SPECIFICATION: Reads binary_points.csv and outputs LOO-CV error rate for 1NN
 # FOR: CS 4200- Assignment #2
-# TIME SPENT: 1.5 hr
+# TIME SPENT: 1 hr
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH AS numpy OR pandas. You have to work here only with standard vectors and arrays
@@ -12,9 +12,10 @@
 from sklearn.neighbors import KNeighborsClassifier
 import csv
 
-db = []
 wrong_pred = 0.0
 total_pred = 0.0
+class_num = 2
+db = []
 
 #reading the data in a csv file
 with open('binary_points.csv', 'r') as csvfile:
@@ -29,7 +30,6 @@ for i, instance in enumerate(db):
     #add the training features to the 2D array X removing the instance that will be used for testing in this iteration. For instance, X = [[1, 3], [2, 1,], ...]]
     #--> add your Python code here
     X = []
-
     for data, instance in enumerate(db):
         trainingFeats = []
         if i != data:
@@ -41,12 +41,11 @@ for i, instance in enumerate(db):
     #transform the original training classes to numbers and add to the vector Y removing the instance that will be used for testing in this iteration. For instance, Y = [1, 2, ,...]
     #--> add your Python code here
     Y = []
-
     for data, instance in enumerate(db):
         if i != data:
-            if instance[2] == '+':
+            if instance[class_num] == '+':
                 Y.append(1)
-            elif instance[2] == '-':
+            elif instance[class_num] == '-':
                 Y.append(2)
 
     #store the test sample of this iteration in the vector testSample
@@ -66,19 +65,20 @@ for i, instance in enumerate(db):
     #--> add your Python code here
     for data, instance in enumerate(db):
             if i == data:
-                if instance[2] == '+':
-                    class_pred = 1
-                elif instance[2] == '-':
-                    class_pred = 2
+                if instance[class_num] == '+':
+                    true_label = 1
+                    total_pred += 1
+                elif instance[class_num] == '-':
+                    true_label = 2
+                    total_pred += 1
 
     class_predicted = clf.predict([testSample])[0]
 
     #compare the prediction with the true label of the test instance to start calculating the error rate.
     #--> add your Python code here
 
-    if class_predicted != class_pred:
+    if class_predicted != true_label:
         wrong_pred += 1
-    total_pred += 1
 
 #print the error rate
 #--> add your Python code here
