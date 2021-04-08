@@ -15,8 +15,6 @@ from sklearn.utils import resample
 from sklearn.ensemble import RandomForestClassifier
 import csv
 
-X_training = []
-Y_training = []
 dbTraining = []
 dbTest = []
 X_training = []
