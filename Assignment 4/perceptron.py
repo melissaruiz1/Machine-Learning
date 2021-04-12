@@ -2,7 +2,7 @@
 # AUTHOR: Melissa Ruiz
 # FILENAME: perceptron.py
 # SPECIFICATION: Builds a perceptron classifier by simulating a grid search, trying to find which combination of two
-# Perceptron hyperparameters (eta0, random_state) leads you to the best prediction performance
+# Perceptron hyperparameters (eta0, random_state) leads to the best prediction performance.
 # FOR: CS 4200- Assignment #4
 # TIME SPENT: 45 min
 #-----------------------------------------------------------*/
